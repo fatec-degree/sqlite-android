@@ -1,4 +1,4 @@
-package br.com.fatec.selecaosqlite;
+package br.com.fatec.selecaosqlite.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,8 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import br.com.fatec.selecaosqlite.R;
 import br.com.fatec.selecaosqlite.dao.SelecaoDao;
 import br.com.fatec.selecaosqlite.model.Selecao;
+import br.com.fatec.selecaosqlite.util.Util;
 
 public class InclusaoActivity extends AppCompatActivity {
 
@@ -30,7 +32,7 @@ public class InclusaoActivity extends AppCompatActivity {
         this.spinnerContinente = findViewById(R.id.editTextContinente);
         this.buttonIncluir = findViewById(R.id.buttonIncluir);
 
-        carregarContinentes();
+        Util.carregarContinentes(InclusaoActivity.this, spinnerContinente);
 
         buttonIncluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,9 +54,4 @@ public class InclusaoActivity extends AppCompatActivity {
         });
     }
 
-    private void carregarContinentes() {
-        String[] continentes = {"Europa", "Ásia", "África", "América", "Oceania"};
-        ArrayAdapter adapter = new ArrayAdapter(InclusaoActivity.this, android.R.layout.simple_spinner_dropdown_item, continentes);
-        spinnerContinente.setAdapter(adapter);
-    }
 }

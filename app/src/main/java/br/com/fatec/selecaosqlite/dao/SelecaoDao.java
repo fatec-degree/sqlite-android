@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.fatec.selecaosqlite.model.Selecao;
 
@@ -50,17 +52,27 @@ public class SelecaoDao extends SQLiteOpenHelper {
         return getWritableDatabase().insert(TABELA, null, contentValues); // retorna o id do último registro adicionado no banco
     }
 
-    public ArrayList<Selecao> selectAll(){
+    public List<Selecao> selectAll(){
         String sql = "SELECT * FROM " + TABELA;
         Cursor cursor = getReadableDatabase().rawQuery(sql, null); // é semelhante a uma matriz
-        ArrayList<Selecao> selecoes = new ArrayList<>();
+        return convertCursorToSelecao(cursor);
+    }
 
+    public List<Selecao> selectByContinente(String continente){
+        String sql = "SELECT * FROM " + TABELA + " WHERE continente = '" + continente + "'";
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        return convertCursorToSelecao(cursor);
+    }
+
+    @NonNull
+    private List<Selecao> convertCursorToSelecao(Cursor cursor) {
+        List<Selecao> selecoes = new ArrayList<>();
         while(cursor.moveToNext()){
-            Selecao selecao = new Selecao();
-            selecao.setId(cursor.getInt(0));
-            selecao.setNome(cursor.getString(1));
-            selecao.setTitulos(cursor.getInt(2));
-            selecao.setContinente(cursor.getString(3));
+            Selecao selecao = new Selecao(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getInt(2),
+                    cursor.getString(3));
             selecoes.add(selecao);
         }
         return selecoes;
