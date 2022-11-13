@@ -64,6 +64,12 @@ public class SelecaoDao extends SQLiteOpenHelper {
         return convertCursorToSelecao(cursor);
     }
 
+    public long delete(int id){
+        String where = "id = ?";
+        String[] whereArgs = {id + ""};
+        return getWritableDatabase().delete(TABELA, where, whereArgs);
+    }
+
     @NonNull
     private List<Selecao> convertCursorToSelecao(Cursor cursor) {
         List<Selecao> selecoes = new ArrayList<>();
