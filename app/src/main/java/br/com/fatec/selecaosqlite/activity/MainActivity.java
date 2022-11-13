@@ -86,6 +86,19 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        listViewSelecao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(MainActivity.this, AlteracaoActivity.class);
+                Selecao selecao = selecoes.get(position);
+                intent.putExtra("id", selecao.getId());
+                intent.putExtra("nome", selecao.getNome());
+                intent.putExtra("titulos", selecao.getTitulos() + "");
+                intent.putExtra("continente", selecao.getContinente());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

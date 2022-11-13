@@ -70,6 +70,18 @@ public class SelecaoDao extends SQLiteOpenHelper {
         return getWritableDatabase().delete(TABELA, where, whereArgs);
     }
 
+    public int update(Selecao selecao){
+        ContentValues contentValues = new ContentValues();
+        int id = selecao.getId();
+        contentValues.put("nome", selecao.getNome());
+        contentValues.put("titulos", selecao.getTitulos());
+        contentValues.put("continente", selecao.getContinente());
+
+        String where = "id = ?";
+        String[] whereArgs = {id + ""};
+        return getWritableDatabase().update(TABELA, contentValues, where, whereArgs);
+    }
+
     @NonNull
     private List<Selecao> convertCursorToSelecao(Cursor cursor) {
         List<Selecao> selecoes = new ArrayList<>();
